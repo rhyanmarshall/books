@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Books</title>
+</head>
+<body>
+  <h1>My Favorite Books</h1>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN</th>
+      </tr>
+    </thead>
+    <tbody id="books-table-body">
+    </tbody>
+  </table>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const supabaseUrl = "https://ujppepywlxqrqwsznqdy.supabase.co";
+    const supabaseKey = "sb_publishable_iXc3Mj8phqxYZQH6_K85xA_Esb4SVJn";
+  
+
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function loadBooks() {
+      const { data, error } = await supabase
+        .from('books')
+        .select('*');
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const tableBody = document.getElementById('books-table-body');
+
+      data.forEach(book => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${book.title}</td>
+          <td>${book.author}</td>
+          <td>${book.isbn}</td>
+        `;
+    
+        tableBody.appendChild(row);
+      });
+    }
+
+    loadBooks();
+  </script>
+</body>
+</html>
