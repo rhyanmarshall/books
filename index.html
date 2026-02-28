@@ -28,7 +28,13 @@
     const supabaseUrl = "https://ujppepywlxqrqwsznqdy.supabase.co";
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqcHBlcHl3bHhxcnF3c3pucWR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNTA2NzAsImV4cCI6MjA4NzcyNjY3MH0.syQ_9EzA9MnDCnWh5xPe4dmEh6mKyba42J0kgw3Uw1E";
 
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    let supabase;
+    if (!window.supabaseClient) {
+      supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+      window.supabaseClient = supabase;
+    } else {
+      supabase = window.supabaseClient;
+    }
 
     async function loadBooks() {
       const { data, error } = await supabase
