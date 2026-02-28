@@ -35,29 +35,27 @@
         .from('books')
         .select('*');
 
-      if (error) {
-        console.error(error);
-        return;
-      }
+      console.log("DATA:", data);
+      console.log("ERROR:", error);
+
+      if (error) return;
 
       const tableBody = document.getElementById('books-table-body');
 
       data.forEach(book => {
         const row = document.createElement('tr');
-
         row.innerHTML = `
           <td>${book.id}</td>
-          <td>${book.created_at}</td>  
+          <td>${book.created_at}</td>
           <td>${book.title}</td>
           <td>${book.author}</td>
           <td>${book.isbn}</td>
-        `;
-    
+      `  ;
         tableBody.appendChild(row);
       });
     }
 
-    loadBooks();
-  </script>
+  loadBooks();
+</script>
 </body>
 </html>
